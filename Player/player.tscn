@@ -1,7 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bi3tgri1myo4v"]
+[gd_scene load_steps=15 format=3 uid="uid://bi3tgri1myo4v"]
 
 [ext_resource type="Texture2D" uid="uid://dmj2b7rpiecs7" path="res://Player/Sprites/ExamplePlayerSprite.png" id="1_1jf4b"]
 [ext_resource type="Script" path="res://Player/Scripts/player.gd" id="1_8gwtv"]
+[ext_resource type="Script" path="res://Player/Scripts/player_state_machine.gd" id="3_giqgw"]
+[ext_resource type="Script" path="res://Player/Scripts/state_idle.gd" id="4_dn08e"]
+[ext_resource type="Script" path="res://Player/Scripts/state_walk.gd" id="5_xhqxd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wfrab"]
 
@@ -23,7 +26,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_o257u"]
 resource_name = "idle_down"
 length = 0.4
-loop_mode = 1
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -40,7 +43,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_jimtl"]
 resource_name = "idle_side"
 length = 0.4
-loop_mode = 1
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -57,7 +60,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_lq3t6"]
 resource_name = "idle_up"
 length = 0.4
-loop_mode = 1
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -74,7 +77,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_otdx2"]
 resource_name = "walk_down"
 length = 0.3
-loop_mode = 1
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -91,7 +94,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_n5oav"]
 resource_name = "walk_side"
 length = 0.3
-loop_mode = 1
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -108,7 +111,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_bawc8"]
 resource_name = "walk_up"
 length = 0.3
-loop_mode = 1
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -147,3 +150,12 @@ hframes = 21
 libraries = {
 "": SubResource("AnimationLibrary_onlhg")
 }
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_giqgw")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_dn08e")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("5_xhqxd")
