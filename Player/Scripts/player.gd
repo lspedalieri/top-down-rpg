@@ -6,7 +6,9 @@ var direction : Vector2 = Vector2.ZERO
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: PlayerStateMachine = $StateMachine
+@onready var interactions: PlayerInteractionsHost = $Interactions
 
+signal directionChanger(new_direction: Vector2)
 
 func _ready() -> void:
 	state_machine.initialize(self)
@@ -38,6 +40,8 @@ func setDirection() -> bool:
 		return false
 		
 	cardinal_direction = new_dir
+	#interactions.updateDirection(cardinal_direction)
+	directionChanger.emit(cardinal_direction)
 	sprite.scale.x = -1 if cardinal_direction == Vector2.LEFT else 1
 	return true
 

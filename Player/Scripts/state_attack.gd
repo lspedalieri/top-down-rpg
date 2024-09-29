@@ -7,11 +7,12 @@ class_name State_Attack extends State
 @onready var audio: AudioStreamPlayer2D = $"../../Audio/AudioStreamPlayer2D"
 @export var attack_sound : AudioStream
 @export_range(1,20, 0.5) var decelerate_speed : float = 5.0
+@onready var hurt_box: HurtBox = $"../../Interactions/HurtBox"
 
 var attacking : bool = false
 
 func _ready() -> void:
-	pass
+	hurt_box.monitoring = false
 	
 	
 ## What happens when the player enters this State?
@@ -23,6 +24,8 @@ func enter() -> void:
 	audio.pitch_scale = randf_range(0.9, 1.1)
 	audio.play()
 	attacking = true
+	await get_tree().create_timer(0.0075).timeout
+	hurt_box.monitoring = attacking
 	pass
 
 
@@ -30,6 +33,7 @@ func enter() -> void:
 func exit() -> void:
 	animation_player.animation_finished.disconnect(endAttack)
 	attacking = false
+	hurt_box.monitoring = attacking
 
 ## What happens during the _process_update in this State?
 func process(_delta : float) -> State:
@@ -52,3 +56,4 @@ func handleInput( _event: InputEvent) -> State:
 
 func endAttack(_new_anim_name : String) ->void:
 	attacking = false
+	print ("attacking false")
